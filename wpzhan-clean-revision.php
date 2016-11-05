@@ -38,7 +38,8 @@ function wz_clean_revision() {
         jQuery(function() {
             jQuery("#wz_submit").click(function () {
                 //alert(jQuery("#wz_count").val());
-                jQuery.post(ajaxurl, {
+                //jQuery.post(ajaxurl, {  #ok
+                jQuery.post("<?php echo admin_url( 'admin-ajax.php' ); ?>", {
                     "action" : "wz_clean_revision",
                     "wz_count" : jQuery("#wz_count").val(),
                     "wz_postid" : jQuery("#wz_postid").val()
@@ -61,8 +62,16 @@ function wz_clean_revision() {
 
 
 
+/**
+ * 如果存在历史版本则创建 meta_box
+ */
 function wz_register_meta_boxes() {
-    add_meta_box("wpzhan-clean-revision", "删除历史版本", 'wz_clean_revision', 'post', 'side', 'high');
+    global $wpdb, $table_prefix;
+
+    $all_revision_count = $wpdb->get_var($wpdb->prepare("select count(*) from `{$table_prefix}posts` where `post_parent` = {$post_id}", ""));
+    if($all_revision_count) {
+        add_meta_box("wpzhan-clean-revision", "删除历史版本", 'wz_clean_revision', 'post', 'side', 'high');
+    }
 }
 
 add_action( 'add_meta_boxes', 'wz_register_meta_boxes' );
