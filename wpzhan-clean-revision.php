@@ -66,9 +66,9 @@ function wz_clean_revision() {
  * 如果存在历史版本则创建 meta_box
  */
 function wz_register_meta_boxes() {
-    global $wpdb, $table_prefix;
+    global $wpdb, $table_prefix, $post;
 
-    $all_revision_count = $wpdb->get_var($wpdb->prepare("select count(*) from `{$table_prefix}posts` where `post_parent` = {$post_id}", ""));
+    $all_revision_count = $wpdb->get_var($wpdb->prepare("select count(*) from `{$table_prefix}posts` where `post_parent` = {$post->ID}", ""));
     if($all_revision_count) {
         add_meta_box("wpzhan-clean-revision", "删除历史版本", 'wz_clean_revision', 'post', 'side', 'high');
     }
