@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: wpzhan-clean-revision
- * Plugin URI: https://www.wordpresszhan.com
+ * Plugin URI: https://github.com/wordpresszhan/wpzhan-clean-revision
  * Description: 清除网站文章的历史版本
  * Author: worldpresszhan
  * Author URI: https://www.wordpresszhan.com
