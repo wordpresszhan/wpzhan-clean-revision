@@ -23,7 +23,7 @@ function wz_clean_revision() {
     global $post, $wpdb, $table_prefix;
 
     $post_id = $post->ID;
-    $all_revision_count = $wpdb->get_var($wpdb->prepare("select count(*) from `{$table_prefix}posts` where `post_parent` = {$post_id}", ""));
+    $all_revision_count = $wpdb->get_var($wpdb->prepare("select count(*) from `{$table_prefix}posts` where `post_parent` = {$post_id} and `post_type` = 'revision'", ""));
 ?>
     <p>当前一共有 <span style="color: red"><?php echo $all_revision_count; ?></span>个版本</p>
 <p>输入数字表示保留最近的几个历史版本</p>
@@ -68,7 +68,7 @@ function wz_clean_revision() {
 function wz_register_meta_boxes() {
     global $wpdb, $table_prefix, $post;
 
-    $all_revision_count = $wpdb->get_var($wpdb->prepare("select count(*) from `{$table_prefix}posts` where `post_parent` = {$post->ID}", ""));
+    $all_revision_count = $wpdb->get_var($wpdb->prepare("select count(*) from `{$table_prefix}posts` where `post_parent` = {$post_id} and `post_type` = 'revision'", ""));
     if($all_revision_count) {
         add_meta_box("wpzhan-clean-revision", "删除历史版本", 'wz_clean_revision', 'post', 'side', 'high');
     }
